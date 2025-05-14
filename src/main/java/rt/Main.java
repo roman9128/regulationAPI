@@ -12,18 +12,18 @@ public class Main {
 
         RegulationAPIService service = new RegulationAPIService();
         try {
-            service.makeRequest(new APIRequest().limit(5).offset(3).search("платформ").sort().build());
+            service.makeRequest(new APIRequest().limit(1).sort().build());
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         List<Project> projects = new ArrayList<>();
         try {
             projects = service.getRequestResultAsObjectsList();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         for (Project project : projects) {
-            System.out.println(project.getId());
+            System.out.println(project);
         }
     }
 

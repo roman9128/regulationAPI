@@ -3,6 +3,8 @@ package rt;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Project {
     @JacksonXmlProperty(isAttribute = true, localName = "id")
@@ -23,6 +25,18 @@ public class Project {
     private String procedure;
     @JacksonXmlProperty(localName = "responsible")
     private String responsible;
+    @JacksonXmlProperty(localName = "circlePersons")
+    private String circlePersons;
+    @JacksonXmlProperty(localName = "problem")
+    private String problem;
+    @JacksonXmlProperty(localName = "objectives")
+    private String objectives;
+    @JacksonXmlProperty(localName = "socialRelations")
+    private String socialRelations;
+    @JacksonXmlProperty(localName = "rationale")
+    private String rationale;
+    @JacksonXmlProperty(localName = "transitionPeriod")
+    private String transitionPeriod;
     @JacksonXmlProperty(localName = "regulatoryImpact")
     private String regulatoryImpact;
     @JacksonXmlProperty(localName = "procedureResult")
@@ -31,16 +45,10 @@ public class Project {
     private LocalDateTime parallelStageStartDiscussion;
     @JacksonXmlProperty(localName = "parallelStageEndDiscussion")
     private LocalDateTime parallelStageEndDiscussion;
-    @JacksonXmlProperty(localName = "nextStageDuration")
-    private String nextStageDuration;
     @JacksonXmlProperty(localName = "startDiscussion")
     private LocalDateTime startDiscussion;
     @JacksonXmlProperty(localName = "endDiscussion")
     private LocalDateTime endDiscussion;
-    @JacksonXmlProperty(localName = "discussionDays")
-    private String discussionDays;
-    @JacksonXmlProperty(localName = "publishDate")
-    private LocalDateTime publishDate;
     @JacksonXmlProperty(localName = "kind")
     private String kind;
     @JacksonXmlProperty(localName = "regulatorScissors")
@@ -153,14 +161,6 @@ public class Project {
         this.parallelStageEndDiscussion = parallelStageEndDiscussion;
     }
 
-    public String getNextStageDuration() {
-        return nextStageDuration;
-    }
-
-    public void setNextStageDuration(String nextStageDuration) {
-        this.nextStageDuration = nextStageDuration;
-    }
-
     public LocalDateTime getStartDiscussion() {
         return startDiscussion;
     }
@@ -177,22 +177,6 @@ public class Project {
         this.endDiscussion = endDiscussion;
     }
 
-    public String getDiscussionDays() {
-        return discussionDays;
-    }
-
-    public void setDiscussionDays(String discussionDays) {
-        this.discussionDays = discussionDays;
-    }
-
-    public LocalDateTime getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(LocalDateTime publishDate) {
-        this.publishDate = publishDate;
-    }
-
     public String getKind() {
         return kind;
     }
@@ -207,5 +191,97 @@ public class Project {
 
     public void setRegulatorScissors(String regulatorScissors) {
         this.regulatorScissors = regulatorScissors;
+    }
+
+    public String getCirclePersons() {
+        return circlePersons;
+    }
+
+    public void setCirclePersons(String circlePersons) {
+        this.circlePersons = circlePersons;
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem;
+    }
+
+    public String getObjectives() {
+        return objectives;
+    }
+
+    public void setObjectives(String objectives) {
+        this.objectives = objectives;
+    }
+
+    public String getSocialRelations() {
+        return socialRelations;
+    }
+
+    public void setSocialRelations(String socialRelations) {
+        this.socialRelations = socialRelations;
+    }
+
+    public String getRationale() {
+        return rationale;
+    }
+
+    public void setRationale(String rationale) {
+        this.rationale = rationale;
+    }
+
+    public String getTransitionPeriod() {
+        return transitionPeriod;
+    }
+
+    public void setTransitionPeriod(String transitionPeriod) {
+        this.transitionPeriod = transitionPeriod;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Project project)) return false;
+
+        return getProjectId().equals(project.getProjectId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getProjectId().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy г.", Locale.getDefault());
+        final StringBuilder sb = new StringBuilder();
+        sb.append("    Проект НПА:").append(System.lineSeparator());
+        sb.append("id проекта (короткий): ").append(id).append(System.lineSeparator());
+        sb.append("id проекта (полный): ").append(projectId).append(System.lineSeparator());
+        sb.append("вид: ").append(kind).append(System.lineSeparator());
+        sb.append("название: ").append(title).append(System.lineSeparator());
+        sb.append("разработчик: ").append(department).append(System.lineSeparator());
+        sb.append("дата создания: ").append(date.format(formatter)).append(System.lineSeparator());
+        sb.append("этап проекта: ").append(stage).append(System.lineSeparator());
+        sb.append("статус: ").append(status).append(System.lineSeparator());
+        sb.append("процедура: ").append(procedure).append(System.lineSeparator());
+        sb.append("ответственный сотрудник: ").append(responsible).append(System.lineSeparator());
+        sb.append("степень регулирующего воздействия: ").append(regulatoryImpact).append(System.lineSeparator());
+        sb.append("решение по итогам процедуры ОРВ: ").append(procedureResult).append(System.lineSeparator());
+        sb.append("дата начала независимой антикоррупционной экспертизы: ").append(parallelStageStartDiscussion.format(formatter)).append(System.lineSeparator());
+        sb.append("дата окончания независимой антикоррупционной экспертизы: ").append(parallelStageEndDiscussion.format(formatter)).append(System.lineSeparator());
+        sb.append("дата начала общественного обсуждения: ").append(startDiscussion.format(formatter)).append(System.lineSeparator());
+        sb.append("дата окончания общественного обсуждения: ").append(endDiscussion.format(formatter)).append(System.lineSeparator());
+        sb.append("обязательные требования (регуляторная гильотина): ").append(regulatorScissors).append(System.lineSeparator());
+        sb.append("краткое описание проблемы: ").append(problem).append(System.lineSeparator());
+        sb.append("краткое изложение целей регулирования: ").append(objectives).append(System.lineSeparator());
+        sb.append("круг лиц: ").append(circlePersons).append(System.lineSeparator());
+        sb.append("общая характеристика соответствующих общественных отношений: ").append(socialRelations).append(System.lineSeparator());
+        sb.append("обоснование необходимости подготовки проекта нормативно правового акта: ").append(rationale).append(System.lineSeparator());
+        sb.append("срок переходного периода (в календарных днях): ").append(transitionPeriod).append(System.lineSeparator());
+        return sb.toString();
     }
 }
