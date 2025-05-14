@@ -3,7 +3,7 @@ package rt;
 public class APIRequest {
     private final String BASE_URL = "https://regulation.gov.ru/api/npalist";
     private String id = "";
-    private String limit = "";
+    private String limit = "limit=100"; // default value
     private String offset = "";
     private String search = "";
     private String sort = "";
@@ -14,10 +14,21 @@ public class APIRequest {
     }
 
     public APIRequest limit(int limit) {
+        if (limit > 500) {
+            limit = 500;
+        }
+        if (limit < 1) {
+            limit = 1;
+        }
         this.limit = "limit=" + limit;
         return this;
     }
 
+    /**
+     * сдвиг относительно первого элемента списка. Например, если лимит = 5, а сдвиг = 3, то первым элементом списка будет четвёртый элемент изначального списка
+     * @param offset
+     * @return
+     */
     public APIRequest offset(int offset) {
         this.offset = "offset=" + offset;
         return this;
@@ -35,19 +46,19 @@ public class APIRequest {
 
     public String build() {
         StringBuilder request = new StringBuilder(BASE_URL);
-        if (!this.id.isBlank()) {
+        if (!id.isBlank()) {
             request.append("/").append(id);
         } else {
             request.append("?").append(limit);
-            if (!limit.isBlank()) {
-                request.append("&");
-            }
-            request.append(offset);
             if (!offset.isBlank()) {
                 request.append("&");
             }
-            request.append(search);
+            request.append(offset);
             if (!search.isBlank()) {
+                request.append("&");
+            }
+            request.append(search);
+            if (!sort.isBlank()) {
                 request.append("&");
             }
             request.append(sort);

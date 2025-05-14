@@ -12,7 +12,7 @@ public class Main {
 
         RegulationAPIService service = new RegulationAPIService();
         try {
-            service.makeRequest(new APIRequest().limit(10).search("платформ").sort().build());
+            service.makeRequest(new APIRequest().limit(5).offset(3).search("платформ").sort().build());
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -23,7 +23,7 @@ public class Main {
             throw new RuntimeException(e);
         }
         for (Project project : projects) {
-            System.out.println(project.getDepartment());
+            System.out.println(project.getId());
         }
     }
 
