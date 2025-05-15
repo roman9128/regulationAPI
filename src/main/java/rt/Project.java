@@ -53,6 +53,7 @@ public class Project {
     private String kind;
     @JacksonXmlProperty(localName = "regulatorScissors")
     private String regulatorScissors;
+    private final String baseLink = "https://regulation.gov.ru/Regulation/Npa/PublicView?npaID=";
 
     public Project() {
     }
@@ -259,6 +260,7 @@ public class Project {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy г.", Locale.getDefault());
         final StringBuilder sb = new StringBuilder();
         sb.append("    Проект НПА:").append(System.lineSeparator());
+        sb.append("ссылка на проект: ").append(baseLink).append(id).append(System.lineSeparator());
         sb.append("id проекта (короткий): ").append(id).append(System.lineSeparator());
         sb.append("id проекта (полный): ").append(projectId).append(System.lineSeparator());
         sb.append("вид: ").append(kind).append(System.lineSeparator());
